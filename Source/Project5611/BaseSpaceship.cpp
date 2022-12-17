@@ -162,7 +162,7 @@ void ABaseSpaceship::Tick(float DeltaTime)
             ExplosionSystem->ToggleActive();
         }
 
-        if (Spaceship && destroyCountDown >= 0.4)
+        if (Spaceship && destroyCountDown >= 0.1)
         {
             Spaceship->SetVisibility(false);
         }
@@ -172,37 +172,38 @@ void ABaseSpaceship::Tick(float DeltaTime)
             Destroy();
         }
     }
-    
-    cone->SetActorLocation(GetActorLocation() + (GetTransform().GetUnitAxis(EAxis::Y) * 20000.0));
-    FRotator newConeRot = GetActorRotation();
-    newConeRot.Roll -= 90;
-    cone->SetActorRotation(newConeRot);
+    else {
+        cone->SetActorLocation(GetActorLocation() + (GetTransform().GetUnitAxis(EAxis::Y) * 20000.0));
+        FRotator newConeRot = GetActorRotation();
+        newConeRot.Roll -= 90;
+        cone->SetActorRotation(newConeRot);
 
-    // If being followed, give up on following other and try to dodge
-    if (beingFollowed) {
-        if (lastChangeVel > NormalTimeToChangeVelocity) {
-            // try to speed up and set random velocity to dodge
-            newRandomVelocity = FVector(FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0));
-            newRandomVelocity.Normalize();
-            NormalTimeToChangeVelocity = FMath::RandRange(1.0, 3.0);
-            lastChangeVel = 0;
+        // If being followed, give up on following other and try to dodge
+        if (beingFollowed) {
+            if (lastChangeVel > NormalTimeToChangeVelocity) {
+                // try to speed up and set random velocity to dodge
+                newRandomVelocity = FVector(FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0));
+                newRandomVelocity.Normalize();
+                NormalTimeToChangeVelocity = FMath::RandRange(1.0, 3.0);
+                lastChangeVel = 0;
+            }
+            else {
+                lastChangeVel += DeltaTime;
+            }
+            CalculateAcceleration(newRandomVelocity, DOGE_FORCE_MULTIPLIER);
         }
-        else {
-            lastChangeVel += DeltaTime;
+        else if (cone->TargetSpaceship == NULL) {
+            if (lastChangeVel > NormalTimeToChangeVelocity) {
+                newRandomVelocity = FVector(FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0), FMath::RandRange(-0.1, 0.1));
+                newRandomVelocity.Normalize();
+                NormalTimeToChangeVelocity = FMath::RandRange(2.0, 5.0);
+                lastChangeVel = 0;
+            }
+            else {
+                lastChangeVel += DeltaTime;
+            }
+            CalculateAcceleration(newRandomVelocity, NORMAL_FORCE_MULTIPLIER / 2);
         }
-        CalculateAcceleration(newRandomVelocity, DOGE_FORCE_MULTIPLIER);
-    }
-    else if (cone->TargetSpaceship == NULL) {
-        if (lastChangeVel > NormalTimeToChangeVelocity) {
-            newRandomVelocity = FVector(FMath::RandRange(-1.0, 1.0), FMath::RandRange(-1.0, 1.0), FMath::RandRange(-0.1, 0.1));
-            newRandomVelocity.Normalize();
-            NormalTimeToChangeVelocity = FMath::RandRange(2.0, 5.0);
-            lastChangeVel = 0;
-        }
-        else {
-            lastChangeVel += DeltaTime;
-        }
-        CalculateAcceleration(newRandomVelocity, NORMAL_FORCE_MULTIPLIER / 2);
     }
 }
 

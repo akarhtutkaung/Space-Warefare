@@ -71,26 +71,28 @@ void ASpaceshipX::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     
-    if (!beingFollowed && cone->TargetSpaceship) { // Only if not being follow, try to follow other
-        // If enemy is inside FOV
-        ASpaceshipY* TargetSpaceship = dynamic_cast<ASpaceshipY*>(cone->TargetSpaceship);
-        if (TargetSpaceship) {
-            FollowTarget(TargetSpaceship);
-            // Shoot laser
-            if (prevLaserTime >= LASER_SHOT_INTERVAL) {
-                CreateLaser();
-                prevLaserTime = 0;
-            }
+    if (HP > 0) {
+        if (!beingFollowed && cone->TargetSpaceship) { // Only if not being follow, try to follow other
+            // If enemy is inside FOV
+            ASpaceshipY* TargetSpaceship = dynamic_cast<ASpaceshipY*>(cone->TargetSpaceship);
+            if (TargetSpaceship && TargetSpaceship->HP >= 0) {
+                FollowTarget(TargetSpaceship);
+                // Shoot laser
+                if (prevLaserTime >= LASER_SHOT_INTERVAL) {
+                    CreateLaser();
+                    prevLaserTime = 0;
+                }
 
-            if (prevLaserTime < LASER_SHOT_INTERVAL) {
-                prevLaserTime += DeltaTime;
+                if (prevLaserTime < LASER_SHOT_INTERVAL) {
+                    prevLaserTime += DeltaTime;
+                }
             }
         }
-    }
 
-    CheckBounds(DeltaTime);
-    Move(DeltaTime);
-    UpdateVelocity(DeltaTime);
+        CheckBounds(DeltaTime);
+        Move(DeltaTime);
+        UpdateVelocity(DeltaTime);
+    }
 }
 
 void ASpaceshipX::CreateLaser()
