@@ -11,12 +11,15 @@ When an enemy spaceship enters the field of view, the spaceship will track, pred
 ## Dodge
 
 Upon detection of incoming enemy fire, the spaceship will initiate evasive maneuvers to dodge the bullets.
+
 ![dodge](https://user-images.githubusercontent.com/76828992/217697990-491dd3be-1b1b-4ec0-ad27-9b60baa945f5.gif)
 
 ## Explosion
 
 The spaceship is programmed to explode upon impact with other spaceships or sustained damage from multiple enemy hits.
+
 ![Project5611 - Unreal Editor 2022-12-16 23-03-30 00_00_08-00_00_14](https://user-images.githubusercontent.com/76828992/217698035-3dc622f1-f547-4bb8-9e2f-91724f34fcde.gif)
+
 ![Project5611 - Unreal Editor 2022-12-16 22-46-19 00_00_06-00_00_12](https://user-images.githubusercontent.com/76828992/217698038-591787ed-e7f4-40f1-84b8-76104a707473.gif)
 
 ## Development
