@@ -5,6 +5,7 @@ Simulation of the smart spaceships capable of shooting down enemy spaceships wit
 
 ## Track and Shooting
 When an enemy spaceship enters the field of view, the spaceship will track, predict its movements, and take action to shoot it down.
+
 ![Project5611 (64-bit Development PCD3D_SM5)  2022-12-16 18-54-33 00_00_44-00_00_48 00_00_00-00_00_02~1](https://user-images.githubusercontent.com/76828992/217697955-d10f8d49-092c-4dd7-b6a4-6a6c5b36545b.gif)
 
 ## Dodge
